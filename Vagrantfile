@@ -2,10 +2,10 @@
 #vi: set ft=ruby :
 
 # ******************** PLUGIN INSTALLATION ******************
-required_plugins = %W( vagrant-vbguest vagrant-s3auth )
-required_plugins.each do |plugin|
-   system 'vagrant plugin install {plugin}' unless Vagrant.has_plugin? plugin
-end
+# required_plugins = %W( vagrant-vbguest vagrant-s3auth )
+# required_plugins.each do |plugin|
+#    system 'vagrant plugin install {plugin}' unless Vagrant.has_plugin? plugin
+# end
 
 ### Credentials in /.aws/credentials for the vagrant-s3auth profile
 
@@ -25,12 +25,12 @@ config.vm.define 'puppet-master' do |config|
     vb.memory = 4096
     vb.cpus = 2
     end
-  # config.vm.provision 'shell' do |s|
+  config.vm.provision 'shell' do |s|
   
 
   #   #s.args = ["#{ENV['chef_org']}", "#{ENV['chef_user']}"]
-  #   s.path = './provision/teamcity-server.sh'
-  # end
+     s.path = './provision/puppet-master.sh'
+   end
 end
 
 config.vm.define 'puppet-agent' do |config|
@@ -45,11 +45,11 @@ config.vm.define 'puppet-agent' do |config|
     vb.memory = 2048
     vb.cpus = 2
     end
-#   config.vm.provision 'shell' do |s| 
-#   #  s.args = ["#{ENV['chef_repo']}", "#{ENV['chef_server']}", "#{ENV['chef_org']}", "#{ENV['chef_user']}"]
-#      s.path = './provision/teamcity-agent.sh'
+   config.vm.provision 'shell' do |s| 
+#     s.args = ["#{ENV['chef_repo']}", "#{ENV['chef_server']}", "#{ENV['chef_org']}", "#{ENV['chef_user']}"]
+      s.path = './provision/puppet-agent.sh'
 
-# end
+ end
 end
 end
 
